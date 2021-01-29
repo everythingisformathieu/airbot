@@ -46,7 +46,7 @@ class bot(discord.Client):
                 will_send=time.strftime('%m월 %d일 %H시 %M분 %S초에 출석 하셨습니다.')
                 will_send=will_send.replace('00','㏇').replace('0','').replace('㏇','0')
                 embed = discord.Embed(title=message.author.nick+'님',description=will_send, color=0x00aaaa)
-                embed.set_footer(text=str(check_list[message.author.name]['time'])+'번 출석하셨습니다')
+                embed.set_footer(text=str(check_list[message.author.name]['times'])+'번 출석하셨습니다')
                 await message.channel.send(embed=embed)
             else:
                 await message.channel.send('이미 출석 했습니다.')
