@@ -43,10 +43,10 @@ class bot(discord.Client):
             print(hourtime)
             if hourtime >= 15:
                 daytime+=1
-            hourtime-=9
+            hourtime+=9
             print(hourtime)
-            if hourtime<0:
-                hourtime = 24+hourtime
+            if hourtime>24:
+                hourtime = 24-hourtime
             print(hourtime)
             if message.author.name not in check_list.keys():
                 check_list[message.author.name]={'current_time':'','times':0}
