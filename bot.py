@@ -38,12 +38,19 @@ class bot(discord.Client):
                     await refuse.delete()
                     return
         if message.content in attendance_list:
+            daytime=int(time.strftime('%d'))
+            hourtime=int(time.strftime('%H'))
+            if hourtime >= 15:
+                daytime+=1
+            hourtime-=9
+            if hourtime<0:
+                hourtime = 24-hourtime
             if message.author.name not in check_list.keys():
                 check_list[message.author.name]={'current_time':'','times':0}
-            if time.strftime('%d') != check_list[message.author.name]['current_time']:
-                check_list[message.author.name]['current_time']=time.strftime('%d')
+            if daytime != check_list[message.author.name]['current_time']:
+                check_list[message.author.name]['current_time']=daytime
                 check_list[message.author.name]['times']+=1
-                will_send=time.strftime('%m월 %d일 %H시 %M분 %S초에 출석 하셨습니다.')
+                will_send=time.strftime('%m월 ')+daytime+'일 '+hourtime+'시 '+time.strftime('%M분 %S초에 출석 하셨습니다.')
                 will_send=will_send.replace('00','㏇').replace('0','').replace('㏇','0')
                 embed = discord.Embed(title=message.author.nick+'님',description=will_send, color=0x00aaaa)
                 embed.set_footer(text=str(check_list[message.author.name]['times'])+'번 출석하셨습니다')
