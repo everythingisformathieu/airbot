@@ -7,7 +7,7 @@ import time
 msg_list=['!ㅊㅊ','!출첵','!출석','!출석체크']
 attendance_list=['!ㅊㅊ','!출첵','!출석','!출석체크']
 token=os.environ['token']
-check_list={}
+check_list={"\ub369\ud06c\uc655 \ub2e4\ub9ac\uc6b0\uc2a4": {"current_time": "30", "times": 1}, "\ud1a0\ud22c": {"current_time": "30", "times": 1}, "\uc655\uc790": {"current_time": "30", "times": 1}, "\ub369\ud06c\uc655 \ub2e4\ub9ac": {"current_time": "30", "times": 1}, "nightlife": {"current_time": "30", "times": 1}}
 '''
 async def twitch_totu():
     channel = client.get_channel(760895834698022915)
@@ -52,7 +52,7 @@ class bot(discord.Client):
                 check_list[message.author.name]['times']+=1
                 will_send=time.strftime('%m월 ')+str(daytime)+'일 '+str(hourtime)+'시 '+time.strftime('%M분 %S초에 출석 하셨습니다.')
                 will_send=will_send.replace('00','㏇').replace('0','').replace('㏇','0')
-                embed = discord.Embed(title=message.author.nick+'님',description=will_send, color=0x00aaaa)
+                embed = discord.Embed(title=str(message.author.nick)+'님',description=str(will_send), color=0x00aaaa)
                 embed.set_footer(text=str(check_list[message.author.name]['times'])+'번 출석하셨습니다')
                 await message.channel.send(embed=embed)
             else:
