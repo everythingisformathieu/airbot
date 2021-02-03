@@ -182,11 +182,10 @@ class bot(discord.Client):
         if message.content in attendance_list:
             daytime=int(time.strftime('%d'))
             hourtime=int(time.strftime('%H'))
-            if hourtime >= 15:
-                daytime+=1
             hourtime+=9
-            if hourtime>24:
-                hourtime = 24-hourtime
+            if hourtime >= 24:
+                daytime+=1
+                hourtime -= 24
             if message.author.name not in check_list.keys():
                 check_list[message.author.name]={'current_time':'','times':0}
             if daytime != check_list[message.author.name]['current_time']:
