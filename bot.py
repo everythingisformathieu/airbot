@@ -12,7 +12,7 @@ ttt_game_pad={}
 board_num=['\u2460','\u2461','\u2462','\u2463','\u2464','\u2465','\u2466','\u2467','\u2468','\u2469','\u246a','\u246b','\u246c','\u246d','\u246e','\u246f','\u2470','\u2471','\u2472','\u2473']
 rlphabet={'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10}
 
-check_list = {'덩크왕 다리우스': {'current_time': '30', 'times': 1}, '토투': {'current_time': 3, 'times': 3}, '왕자': {'current_time': 3, 'times': 3}, '덩크왕 다리': {'current_time': '30', 'times': 1}, 'night_life_': {'current_time': 2, 'times': 3}, '꿈틀이': {'current_time': 3, 'times': 1}}
+check_list = {'덩크왕 다리우스': {'current_time': '30', 'times': 1}, '토투': {'current_time': 5, 'times': 4}, '왕자': {'current_time': 3, 'times': 3}, '덩크왕 다리': {'current_time': '30', 'times': 1}, 'nightlife': {'current_time': 4, 'times': 4}, '꿈틀이': {'current_time': 4, 'times': 2}, '권춘팔': {'current_time': 5, 'times': 1}, '어어': {'current_time': 5, 'times': 1}}
 
 def check_horizontal(room,turn,position):
     count = 0
@@ -191,9 +191,10 @@ class bot(discord.Client):
             if daytime != check_list[message.author.name]['current_time']:
                 check_list[message.author.name]['current_time']=daytime
                 check_list[message.author.name]['times']+=1
+                name = str(message.author.nick != None if message.author.nick else message.author.name)
                 will_send=time.strftime('%m월 ')+str(daytime)+'일 '+str(hourtime)+'시 '+time.strftime('%M분 %S초에 출석 하셨습니다.')
                 will_send=will_send.replace('00','㏇').replace('0','').replace('㏇','0')
-                embed = discord.Embed(title=str(message.author.nick)+'님',description=str(will_send), color=0x00aaaa)
+                embed = discord.Embed(title=name+'님',description=str(will_send), color=0x00aaaa)
                 embed.set_footer(text=str(check_list[message.author.name]['times'])+'번 출석하셨습니다')
                 await message.channel.send(embed=embed)
             else:
@@ -299,6 +300,15 @@ class bot(discord.Client):
                         await message.channel.send('당신 차례가 아닙니다.')
                 else:
                     await message.channel.send('인자는 알파벳, 숫자 해서 2글자여야 합니다.')
+                    
+        if message.content.startswith('!삭제 '):
+            if message.author.name == 'night_life_':
+                await message.channel.purge(limit=int(message.content.replace('!삭제 ','')))
+                mymsg=await message.channel.send(message.content.replace('!삭제 ','')+'개의 채팅을 삭제했습니다.')
+                await asyncio.sleep(5)
+                await mymsg.delete()
+            else:
+                await message.channel.send('권한이 없습니다.')
 
 client = bot()
 client.run(token)
