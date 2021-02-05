@@ -191,7 +191,11 @@ class bot(discord.Client):
             if daytime != check_list[message.author.name]['current_time']:
                 check_list[message.author.name]['current_time']=daytime
                 check_list[message.author.name]['times']+=1
-                name = str(message.author.nick != None if message.author.nick else message.author.name)
+                name = ''
+                if not message.author.nick:
+                    name = str(message.author.name)
+                else:
+                    name = str(message.author.nick)
                 will_send=time.strftime('%m월 ')+str(daytime)+'일 '+str(hourtime)+'시 '+time.strftime('%M분 %S초에 출석 하셨습니다.')
                 will_send=will_send.replace('00','㏇').replace('0','').replace('㏇','0')
                 embed = discord.Embed(title=name+'님',description=str(will_send), color=0x00aaaa)
