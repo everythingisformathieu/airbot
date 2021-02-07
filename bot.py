@@ -12,7 +12,7 @@ ttt_game_pad={}
 board_num=['\u2460','\u2461','\u2462','\u2463','\u2464','\u2465','\u2466','\u2467','\u2468','\u2469','\u246a','\u246b','\u246c','\u246d','\u246e','\u246f','\u2470','\u2471','\u2472','\u2473']
 rlphabet={'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10}
 
-check_list = {'덩크왕 다리우스': {'current_time': '30', 'times': 1}, '토투': {'current_time': 5, 'times': 4}, '왕자': {'current_time': 3, 'times': 3}, '덩크왕 다리': {'current_time': '30', 'times': 1}, 'nightlife': {'current_time': 4, 'times': 4}, '꿈틀이': {'current_time': 4, 'times': 2}, '권춘팔': {'current_time': 5, 'times': 1}, '어어': {'current_time': 5, 'times': 1}}
+check_list = {'덩크왕 다리우스': {'current_time': '30', 'times': 1}, '토투': {'current_time': 5, 'times': 4}, '왕자': {'current_time': 3, 'times': 3}, '덩크왕 다리': {'current_time': '30', 'times': 1}, 'night_life_': {'current_time': 4, 'times': 7}, '꿈틀이': {'current_time': 4, 'times': 2}, '권춘팔': {'current_time': 5, 'times': 1}, '어어': {'current_time': 5, 'times': 1}}
 
 def check_horizontal(room,turn,position):
     count = 0
