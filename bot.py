@@ -471,7 +471,7 @@ class bot(discord.Client):
             msg3 = await message.channel.send(embed=embed3)
             for emoji in message.guild.emojis:
                 if 'stream_' in emoji.name:
-                    await msg3.add_reaction(f":{emoji.name.replace(':','')}:{emoji.id}")
+                    await msg3.add_reaction(f":{emoji.name}:{emoji.id}")
 
 client = bot(intents=intents)
 client.run(token)
