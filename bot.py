@@ -48,7 +48,7 @@ dic = {
             ":stream_africa:":"[ 아프리카 BJ ]",
             ":stream_spoon:":"[ 스푸너 ]",
             ":stream_etc:":"[ 기타 방송인 ]",
-        }
+        },
     }
 }
 def find_roles(author):
