@@ -465,7 +465,7 @@ class bot(discord.Client):
             emoji_list[message.guild]['stream_emoji_tag']={}
             for emoji in message.guild.emojis:
                 if 'stream_' in emoji.name:
-                    arr3.append(f'<:{emoji.name}:{emoji.id}> : '+dic1['game_role'][emoji.name])
+                    arr3.append(f'<:{emoji.name}:{emoji.id}> : '+dic1['stream_role'][emoji.name])
                     emoji_list[message.guild]['stream_emoji_tag'][emoji.name]=f'<:{emoji.name}:{emoji.id}>'
             embed3 = discord.Embed(title="혹시 방송을 하시나요?", description="\n".join(arr3), color=0xCC0000)
             msg3 = await message.channel.send(embed=embed3)
