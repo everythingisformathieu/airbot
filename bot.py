@@ -229,7 +229,8 @@ class bot(discord.Client):
             time_arr = ['🌎','🌞','🌙','🌑']
             if 'name' in dir(reaction.emoji):
                 if reaction.emoji.name in emoji_list[author.guild]['game_emoji_name'].keys():
-                    await author.add_roles(discord.utils.get(author.guild.roles,name='ㅡㅡㅡㅡㅡㅡ하는 게임ㅡㅡㅡㅡㅡㅡ')
+                    await author.add_roles(discord.utils.get(author.guild.roles,name="ㅡㅡㅡㅡㅡㅡ하는 게임ㅡㅡㅡㅡㅡㅡ")
+
                     await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['game_emoji_name'][reaction.emoji.name]))
                 elif reaction.emoji.name in emoji_list[author.guild]['stream_emoji_name'].keys():
                     await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['stream_emoji_name'][reaction.emoji.name]))
