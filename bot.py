@@ -30,24 +30,24 @@ dic = {
             "game_lol":"롤",
             "game_siege":"레인보우식스 시즈",
             "game_dbd":"데드 바이 데이라이트",
-            "game_gta":"그타5(Grand Theft Auto5)"
+            "game_gta":"그타5(Grand Theft Auto5)",
         },
         "sex_role":{
             ":female_sign:":["[ 왕자 ]","♂️"],
-            ":male_sign:":["[ 공주 ]","♀️"]
+            ":male_sign:":["[ 공주 ]","♀️"],
         },
         "time_role":{
             ":sun_with_face:":["[ 오전 ]","🌞"],
             ":crescent_moon:":["[ 오후 ]","🌙"],
             ":new_moon:":["[ 새벽 ]","🌑"],
-            ":earth_americas:":["[ 24시 편의점 ]","🌎"]
+            ":earth_americas:":["[ 24시 편의점 ]","🌎"],
         },
         "stream_role":{
             ":stream_youtube:":"[ 유튜버 ]",
             ":stream_twitch:":"[ 트위치 스트리머 ]",
             ":stream_africa:":"[ 아프리카 BJ ]",
             ":stream_spoon:":"[ 스푸너 ]",
-            ":stream_etc:":"[ 기타 방송인 ]"
+            ":stream_etc:":"[ 기타 방송인 ]",
         }
     }
 }
