@@ -11,9 +11,53 @@ token=os.environ['token']
 ttt_game_pad={}
 board_num=['\u2460','\u2461','\u2462','\u2463','\u2464','\u2465','\u2466','\u2467','\u2468','\u2469','\u246a','\u246b','\u246c','\u246d','\u246e','\u246f','\u2470','\u2471','\u2472','\u2473']
 rlphabet={'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6,'H':7,'I':8,'J':9,'K':10}
-
 check_list = {'덩크왕 다리우스': {'current_time': '30', 'times': 1}, '토투': {'current_time': 5, 'times': 4}, '왕자': {'current_time': 3, 'times': 3}, '덩크왕 다리': {'current_time': '30', 'times': 1}, 'night_life_': {'current_time': 4, 'times': 7}, '꿈틀이': {'current_time': 4, 'times': 2}, '권춘팔': {'current_time': 5, 'times': 1}, '어어': {'current_time': 5, 'times': 1}}
-
+intents=intents=discord.Intents.all()
+emoji_list = {}
+dic = {
+    537970432549191680:{
+        "game_role":{
+            "game_kart":"카트라이더",
+            "game_overwatch":"오버워치",
+            "game_osu":"오수!",
+            "game_among":"어몽어스",
+            "game_sudden":"서든어택",
+            "game_black_survival":"블랙서바이벌",
+            "game_battle_ground":"배틀그라운드",
+            "game_valo":"발로란트",
+            "game_maple":"메이플스토리",
+            "game_minecraft":"마인크래프트",
+            "game_lol":"롤",
+            "game_siege":"레인보우식스 시즈",
+            "game_dbd":"데드 바이 데이라이트",
+            "game_gta":"그타5(Grand Theft Auto5)",
+        },
+        "sex_role":{
+            ":female_sign:":["[ 왕자 ]","♂️"],
+            ":male_sign:":["[ 공주 ]","♀️"]
+        },
+        "time_role":{
+            ":sun_with_face:":["[ 오전 ]","🌞"],
+            ":crescent_moon:":["[ 오후 ]","🌙"],
+            ":new_moon:":["[ 새벽 ]","🌑"],
+            ":earth_americas:":["[ 24시 편의점 ]","🌎"],
+        },
+        "stream_role":{
+            "stream_youtube":"[ 유튜버 ]",
+            "stream_twitch":"[ 트위치 스트리머 ]",
+            "stream_africa":"[ 아프리카 BJ ]",
+            "stream_spoon":"[ 스푸너 ]",
+            "stream_etc":"[ 기타 방송인 ]"
+        }
+    }
+}
+def find_roles(author):
+    roles = author.roles
+    roles1 = []
+    for role in roles:
+        roles1.append(str(role))
+    return roles1
+channels = {}
 def check_horizontal(room,turn,position):
     count = 0
     overlap = []
@@ -170,6 +214,69 @@ class bot(discord.Client):
         print('ready!')
         await client.change_presence(status=discord.Status.online, activity=discord.Game('에어봇'))
 
+    async def on_member_join(self, member):
+        if message.guild.id == 537970432549191680:
+            a = await discord.Client.get_channel(self, channels[member.guild.name]).send(member.mention+'님 반갑습니다. 임베드를 클릭해서 역할을 추가하세요!')
+            await asyncio.sleep(5)
+            await a.delete()
+
+    async def on_reaction_add(self, reaction, author):
+        if author.guild.id != 537970432549191680:
+            return
+        global emoji_list
+        if not author.bot:
+            sex_arr = ['♀️','♂️']
+            time_arr = ['🌎','🌞','🌙','🌑']
+            if 'name' in dir(reaction.emoji):
+                if reaction.emoji.name in emoji_list[author.guild]['game_emoji_name'].keys():
+                    await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['game_emoji_name'][reaction.emoji.name]))
+                elif reaction.emoji.name in emoji_list[author.guild]['stream_emoji_name'].keys():
+                    await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['stream_emoji_name'][reaction.emoji.name]))
+            else:
+                if str(reaction) in sex_arr:
+                    roles = find_roles(author)
+                    if ('[ 왕자 ]' in roles or '[ 공주 ]' in roles):
+                        if ('[ 서버 관리자 ]' not in roles and '[ 방장 ]' not in roles):
+                            a = await discord.Client.get_channel(self, channels[author.guild.name]).send('성별은 하나만 추가할 수 있습니다.\n만약 잘못 추가하셨다면 관리자를 부르세요.')
+                            await asyncio.sleep(5)
+                            await a.delete()
+                            return
+                    for i in emoji_list[author.guild]['sex_emoji_name']:
+                        if emoji_list[author.guild]['sex_emoji_name'][i][1] == str(reaction):
+                            await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['sex_emoji_name'][i][0]))
+                            await author.remove_roles(discord.utils.get(author.guild.roles,name='성별 적어주세요'))
+                elif str(reaction) in time_arr:
+                    for i in emoji_list[author.guild]['time_emoji_name']:
+                        if emoji_list[author.guild]['time_emoji_name'][i][1] == str(reaction):
+                            await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['time_emoji_name'][i][0]))
+    async def on_reaction_remove(self, reaction, author):
+        if author.guild.id != 537970432549191680:
+            return
+        global emoji_list
+        if not author.bot:
+            sex_arr = ['♀️','♂️']
+            time_arr = ['🌎','🌞','🌙','🌑']
+            if 'name' in dir(reaction.emoji):
+                if reaction.emoji.name in emoji_list[author.guild]['game_emoji_name'].keys():
+                    await author.remove_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['game_emoji_name'][reaction.emoji.name]))
+                elif reaction.emoji.name in emoji_list[author.guild]['stream_emoji_name'].keys():
+                    await author.remove_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['stream_emoji_name'][reaction.emoji.name]))
+            else:
+                if str(reaction) in sex_arr:
+                    roles = find_roles(author)
+                    if ('[ 서버 관리자 ]' not in roles and '[ 방장 ]' not in roles):
+                        a = await discord.Client.get_channel(self, channels[author.guild.name]).send('관리자만 성별을 수정할 수 있습니다.\n관리자를 부르세요.')
+                        await asyncio.sleep(5)
+                        await a.delete()
+                        return
+                    for i in emoji_list[author.guild]['sex_emoji_name']:
+                        if emoji_list[author.guild]['sex_emoji_name'][i][1] == str(reaction):
+                            await author.remove_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['sex_emoji_name'][i][0]))
+                elif str(reaction) in time_arr:
+                    for i in emoji_list[author.guild]['time_emoji_name']:
+                        if emoji_list[author.guild]['time_emoji_name'][i][1] == str(reaction):
+                            await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['time_emoji_name'][i][0]))
+        
     async def on_message(self, message):
         if message.content in msg_list:
             if str(message.guild) == "토하'-'":
@@ -313,6 +420,56 @@ class bot(discord.Client):
                 await mymsg.delete()
             else:
                 await message.channel.send('권한이 없습니다.')
+        if message.content == '!임베드':
+            if message.guild.id != 537970432549191680:
+                return
+            await message.channel.purge(limit=1)
+            arr = []
+            global emoji_list
+            global dic
+            dic1 = dic[message.guild.id]
+            emoji_list[message.guild]={}
+            emoji_list[message.guild]['game_emoji_name']=dic1['game_role']
+            emoji_list[message.guild]['game_emoji_tag']={}
+            channels[message.guild.name] = message.channel.id
+            for emoji in message.guild.emojis:
+                if 'game_' in emoji.name:
+                    arr.append(f'<:{emoji.name}:{emoji.id}> : '+dic1['game_role'][emoji.name])
+                    emoji_list[message.guild]['game_emoji_tag'][emoji.name]=f'<:{emoji.name}:{emoji.id}>'
+                    
+            embed = discord.Embed(title="플레이 하는 게임을 알려주세요!\n(중복 가능)", description="\n".join(arr), color=0x00FF99)
+            msg = await message.channel.send(embed=embed)
+            for emoji in message.guild.emojis:
+                if 'game_' in emoji.name:
+                    await msg.add_reaction(f":{emoji.name}:{emoji.id}")
+            arr1 = []
+            emoji_list[message.guild]['sex_emoji_name']=dic1['sex_role']
+            for emoji in dic1['sex_role']:
+                arr1.append(emoji+": "+dic1['sex_role'][emoji][0])
+            embed1 = discord.Embed(title="자신의 성별을 알려주세요!", description="\n".join(arr1), color=0x62c1cc)
+            msg1 = await message.channel.send(embed=embed1)
+            for emoji in dic1['sex_role']:
+                await msg1.add_reaction(dic1['sex_role'][emoji][1])
+            arr2 = []
+            emoji_list[message.guild]['time_emoji_name']=dic1['time_role']
+            for emoji in dic1['time_role']:
+                arr2.append(emoji+": "+dic1['time_role'][emoji][0])
+            embed2 = discord.Embed(title='주로 플레이 하는 시간대를 알려주세요!', description='\n'.join(arr2), color=0xFFFF33)
+            msg2 = await message.channel.send(embed=embed2)
+            for emoji in dic1['time_role']:
+                await msg2.add_reaction(dic1['time_role'][emoji][1])
+            arr3 = []
+            emoji_list[message.guild]['stream_emoji_name']=dic1['stream_role']
+            emoji_list[message.guild]['stream_emoji_tag']={}
+            for emoji in message.guild.emojis:
+                if 'stream_' in emoji.name:
+                    arr3.append(f'<:{emoji.name}:{emoji.id}> : '+dic1['stream_role'][emoji.name])
+                    emoji_list[message.guild]['stream_emoji_tag'][emoji.name]=f'<:{emoji.name}:{emoji.id}>'
+            embed3 = discord.Embed(title="혹시 방송을 하시나요?", description="\n".join(arr3), color=0xCC0000)
+            msg3 = await message.channel.send(embed=embed3)
+            for emoji in message.guild.emojis:
+                if 'stream_' in emoji.name:
+                    await msg3.add_reaction(f":{emoji.name}:{emoji.id}")
 
-client = bot()
+client = bot(intents=intents)
 client.run(token)
