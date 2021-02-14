@@ -229,8 +229,8 @@ class bot(discord.Client):
             time_arr = ['🌎','🌞','🌙','🌑']
             if 'name' in dir(reaction.emoji):
                 if reaction.emoji.name in emoji_list[author.guild]['game_emoji_name'].keys():
-                    await author.add_roles(discord.utils.get(author.guild.roles,name="ㅡㅡㅡㅡㅡㅡ하는 게임ㅡㅡㅡㅡㅡㅡ")
-                    author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['game_emoji_name'][reaction.emoji.name]))
+                    author.add_roles(discord.utils.get(author.guild.roles,name="ㅡㅡㅡㅡㅡㅡ하는 게임ㅡㅡㅡㅡㅡㅡ")
+                    await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['game_emoji_name'][reaction.emoji.name]))
                 elif reaction.emoji.name in emoji_list[author.guild]['stream_emoji_name'].keys():
                     await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['stream_emoji_name'][reaction.emoji.name]))
             else:
@@ -249,8 +249,8 @@ class bot(discord.Client):
                 elif str(reaction) in time_arr:
                     for i in emoji_list[author.guild]['time_emoji_name']:
                         if emoji_list[author.guild]['time_emoji_name'][i][1] == str(reaction):
-                            await author.add_roles(discord.utils.get(author.guild.roles,name='ㅡㅡㅡㅡㅡㅡ활동 시간대ㅡㅡㅡㅡㅡㅡ')
-                            author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['time_emoji_name'][i][0]))
+                            author.add_roles(discord.utils.get(author.guild.roles,name='ㅡㅡㅡㅡㅡㅡ활동 시간대ㅡㅡㅡㅡㅡㅡ')
+                            await author.add_roles(discord.utils.get(author.guild.roles,name=emoji_list[author.guild]['time_emoji_name'][i][0]))
     async def on_reaction_remove(self, reaction, author):
         if author.guild.id != 537970432549191680:
             return
