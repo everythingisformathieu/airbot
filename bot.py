@@ -43,11 +43,11 @@ dic = {
             ":earth_americas:":["[ 24시 편의점 ]","🌎"],
         },
         "stream_role":{
-            ":stream_youtube:":"[ 유튜버 ]",
-            ":stream_twitch:":"[ 트위치 스트리머 ]",
-            ":stream_africa:":"[ 아프리카 BJ ]",
-            ":stream_spoon:":"[ 스푸너 ]",
-            ":stream_etc:":"[ 기타 방송인 ]",
+            "stream_youtube":"[ 유튜버 ]",
+            "stream_twitch":"[ 트위치 스트리머 ]",
+            "stream_africa":"[ 아프리카 BJ ]",
+            "stream_spoon":"[ 스푸너 ]",
+            "stream_etc":"[ 기타 방송인 ]",
         },
     }
 }
@@ -465,7 +465,7 @@ class bot(discord.Client):
             emoji_list[message.guild]['stream_emoji_tag']={}
             for emoji in message.guild.emojis:
                 if 'stream_' in emoji.name:
-                    arr3.append(f'<:{emoji.name}:{emoji.id}> : '+dic1['stream_role'][emoji.name])
+                    arr3.append(f'<:{emoji.name}:{emoji.id}> : '+dic1['game_role'][emoji.name])
                     emoji_list[message.guild]['stream_emoji_tag'][emoji.name]=f'<:{emoji.name}:{emoji.id}>'
             embed3 = discord.Embed(title="혹시 방송을 하시나요?", description="\n".join(arr3), color=0xCC0000)
             msg3 = await message.channel.send(embed=embed3)
