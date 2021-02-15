@@ -206,7 +206,7 @@ def show_board(room):
                 reply_list[i+1]=''.join(a)
     return '\n'.join(reply_list)
 
-
+msgs = {}
 
 class bot(discord.Client):
 
@@ -429,6 +429,8 @@ class bot(discord.Client):
             arr = []
             global emoji_list
             global dic
+            global msgs
+            msgs[message.guild] = {}
             dic1 = dic[message.guild.id]
             emoji_list[message.guild]={}
             emoji_list[message.guild]['game_emoji_name']=dic1['game_role']
@@ -441,6 +443,7 @@ class bot(discord.Client):
                     
             embed = discord.Embed(title="플레이 하는 게임을 알려주세요!\n(중복 가능)", description="\n".join(arr), color=0x00FF99)
             msg = await message.channel.send(embed=embed)
+            msgs[message.guild]['msg'] = msg
             for emoji in message.guild.emojis:
                 if 'game_' in emoji.name:
                     await msg.add_reaction(f":{emoji.name}:{emoji.id}")
@@ -450,6 +453,7 @@ class bot(discord.Client):
                 arr1.append(emoji+": "+dic1['sex_role'][emoji][0])
             embed1 = discord.Embed(title="자신의 성별을 알려주세요!", description="\n".join(arr1), color=0x62c1cc)
             msg1 = await message.channel.send(embed=embed1)
+            msgs[message.guild]['msg1'] = msg1
             for emoji in dic1['sex_role']:
                 await msg1.add_reaction(dic1['sex_role'][emoji][1])
             arr2 = []
@@ -458,6 +462,7 @@ class bot(discord.Client):
                 arr2.append(emoji+": "+dic1['time_role'][emoji][0])
             embed2 = discord.Embed(title='주로 플레이 하는 시간대를 알려주세요!', description='\n'.join(arr2), color=0xFFFF33)
             msg2 = await message.channel.send(embed=embed2)
+            msgs[message.guild]['msg2'] = msg2
             for emoji in dic1['time_role']:
                 await msg2.add_reaction(dic1['time_role'][emoji][1])
             arr3 = []
@@ -469,6 +474,7 @@ class bot(discord.Client):
                     emoji_list[message.guild]['stream_emoji_tag'][emoji.name]=f'<:{emoji.name}:{emoji.id}>'
             embed3 = discord.Embed(title="혹시 방송을 하시나요?", description="\n".join(arr3), color=0xCC0000)
             msg3 = await message.channel.send(embed=embed3)
+            msgs[message.guild]['msg3'] = msg3
             for emoji in message.guild.emojis:
                 if 'stream_' in emoji.name:
                     await msg3.add_reaction(f":{emoji.name}:{emoji.id}")
