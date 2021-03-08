@@ -33,8 +33,8 @@ dic = {
             "game_gta":"그타5(Grand Theft Auto5)",
         },
         "sex_role":{
-            ":female_sign:":["[ 왕자 ]","♂️"],
-            ":male_sign:":["[ 공주 ]","♀️"],
+            ":male_sign:":["[ 왕자 ]","♂️"],
+            ":female_sign:":["[ 공주 ]","♀️"],
         },
         "time_role":{
             ":sun_with_face:":["[ 오전 ]","🌞"],
